@@ -181,3 +181,8 @@ body {
   margin-top: 5px;
   font-size: 1.1rem;
 }
+
+.open .content-flap {
+  opacity: 0;
+  transition: opacity 0.8s ease; /* Mờ dần mượt trong 0.8 giây */
+}
