@@ -1,0 +1,206 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  /* background: url(https://anhdephd.vn/wp-content/uploads/2022/05/background-chuc-mung-nam-moi.jpg); */
+  background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  overflow: hidden;
+  perspective: 1000px;
+}
+
+.scene {
+  width: 320px;
+  height: 400px;
+  position: relative;
+  cursor: pointer;
+}
+
+/* Phong bì */
+.envelope {
+  left: -45%;
+  position: absolute;
+  width: 600px;
+  height: 500px;
+  background-color: lightcoral;
+  /* background: url('https://thumbs.dreamstime.com/b/old-vintage-aged-closed-paper-envelope-isolated-white-front-view-closeup-blank-letter-postage-torn-edges-faded-stamp-258116677.jpg') center/cover; */
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  transition: transform 1s ease;
+}
+
+/* Nắp phong bì */
+.flap {
+  position: absolute;
+  top: 0px;
+  left: 6px;
+  width: 98%;
+  height: 50%;
+  background: linear-gradient(to bottom, #e8d8c3, #d2b48c);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: top;
+  transition: transform 1.2s ease;
+  z-index: 2;
+}
+.content-flap {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  font-weight: 600;
+  font-size: 2.8rem;
+  left: 25%;
+  position: absolute;
+  top: 60%;
+}
+
+/* Tờ giấy thư */
+.letter {
+  position: absolute;
+  top: 25%;
+  left: 48.5%;
+  transform: translateX(-50%) translateY(100%) scale(0.8);
+  width: 190%;
+  height: 510px;
+  padding: 40px 30px;
+  background: url("./imgs/8edcc284-8de4-4d63-a1b8-6fd0701d697b.jpg")
+    center/cover;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  transition: all 1.5s ease;
+  text-align: center;
+  color: #fff;
+  font-size: 1.2rem;
+  z-index: 1;
+}
+
+.letter h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+}
+
+.letter p {
+  line-height: 1.8;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+}
+
+/* Trạng thái khi mở thư */
+.open .flap {
+  transform: rotateX(-180deg);
+}
+
+.open .letter {
+  transform: translateX(-50%) translateY(-20%) scale(1);
+  opacity: 1;
+}
+
+.open .envelope {
+  transform: rotateY(10deg) scale(1.05);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .scene {
+    width: 280px;
+    height: 360px;
+  }
+  .letter h1 {
+    font-size: 2rem;
+  }
+  .letter {
+    font-size: 1rem;
+    padding: 30px 20px;
+  }
+}
+
+/* Hiệu ứng pháo hoa HOÀNH TRÁNG hơn */
+#fireworks {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+#fireworks.active {
+  opacity: 1;
+}
+
+/* Đuôi pháo bay lên (tia sáng trail) */
+.trail {
+  position: absolute;
+  width: 4px;
+  height: 40px;
+  background: linear-gradient(to top, rgba(255, 255, 255, 0), var(--color));
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: trail-rise 1.4s ease-out forwards;
+}
+
+@keyframes trail-rise {
+  0% {
+    transform: translateY(100vh) scaleY(0);
+    opacity: 0;
+  }
+  70% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(0) scaleY(1);
+    opacity: 0;
+  }
+}
+
+/* Điểm nổ chính */
+.firework {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color);
+  box-shadow: 0 0 15px 5px var(--color);
+  animation: rise 1.4s ease-out forwards;
+}
+
+@keyframes rise {
+  0% {
+    transform: translateY(100vh) scale(0.5);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0) scale(1.2);
+    opacity: 1;
+  }
+}
+
+/* Các hạt nổ ra – hoành tráng hơn */
+.particle {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--color);
+  box-shadow: 0 0 20px 8px var(--color);
+  animation: explode 2.5s ease-out forwards;
+}
+
+@keyframes explode {
+  0% {
+    transform: scale(1) translate(0, 0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0) translate(var(--dx), var(--dy));
+    opacity: 0;
+  }
+}
