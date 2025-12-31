@@ -1,3 +1,4 @@
+
 /* Điểm nổ chính */
 .firework {
   position: absolute;
@@ -7,6 +8,7 @@
   background: var(--color);
   box-shadow: 0 0 15px 5px var(--color);
   animation: rise 1.4s ease-out forwards;
+  z-index: 9999;
 }
 
 @keyframes rise {
@@ -29,6 +31,8 @@
   background: var(--color);
   box-shadow: 0 0 20px 8px var(--color);
   animation: explode 2.5s ease-out forwards;
+  z-index: 9999;
+
 }
 
 @keyframes explode {
@@ -85,21 +89,61 @@ body {
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
   transition: transform 1s ease;
 }
+/* Keyframes quay border */
+/* Keyframes quay border */
+@keyframes spinBorder {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 
 /* Chữ trên nắp phong bì */
 .content-flap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
   position: absolute;
   top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
   font-weight: 700;
-  font-size: 1.8rem; /* Nhỏ hơn cho mobile */
-  color: #333;
-  text-shadow: 2px 2px 6px rgba(255, 255, 255, 0.8);
-  z-index: 3;
+  font-size: 1.8rem;
+  color: #fff;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9);
+  z-index: 3; /* Quan trọng: chữ ở trên cùng */
   pointer-events: none;
   text-align: center;
+  background: rgba(139, 0, 0, 0.7);
+  padding: 12px;
+  box-sizing: border-box;
+  box-shadow: 0 0 30px #ff0000, 0 0 60px #ff0000;
+  position: relative;
+  overflow: hidden;
 }
+
+/* Border đỏ chạy vòng */
+.content-flap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(#ff0000, #ff3333, #ff6666, #cc0000, #ff0000);
+  animation: spinBorder 4s linear infinite;
+  z-index: -1;
+}
+
+/* Lớp che tạo độ dày border */
+.content-flap::after {
+  content: '';
+  position: absolute;
+  inset: 12px; /* Điều chỉnh số này để thay đổi độ dày border */
+  border-radius: 50%;
+  background: rgba(139, 0, 0, 0.8);
+  z-index: -1;
+}
+
 
 /* Nắp phong bì */
 .flap {
